@@ -23,7 +23,7 @@ services:
   app_service:
     build: ./app_service
     container_name: app_service
-    command: bash -c "poetry run python -m alembic upgrade head && poetry run python -m src"
+    command: ash -c "poetry run python -m alembic upgrade head && poetry run python -m src"
     stop_signal: SIGINT
     restart: no
     depends_on:
