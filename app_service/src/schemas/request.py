@@ -10,7 +10,7 @@ class RequestSchema(BaseModel):
     address: str
     bandwidth: int
     energy: int
-    balance: Decimal
+    trx_balance: Decimal
     created_at: datetime
 
 
@@ -18,11 +18,11 @@ class CreateRequestSchema(BaseModel):
     address: str
     bandwidth: int
     energy: int
-    balance: Decimal
+    trx_balance: Decimal
 
 
 class UpdateRequestSchema(BaseModel):
     address: str | None = None
     bandwidth: int | None = None
     energy: int | None = None
-    balance: Decimal | None = None
+    trx_balance: Decimal | None = None

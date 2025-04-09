@@ -8,7 +8,7 @@ services:
       - POSTGRES_PASSWORD=test
     restart: unless-stopped
     ports:
-      - 127.0.0.1:5442:5432
+      - 5442:5432
     healthcheck:
       test: [ "CMD", "pg_isready", "-d", "test", "-U", "test" ]
       interval: 5s
@@ -29,6 +29,8 @@ services:
     depends_on:
       app_db:
         condition: service_healthy
+    ports:
+      - 8001:8001
     env_file:
       - app_service/config/.env
     volumes:

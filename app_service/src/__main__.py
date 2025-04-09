@@ -5,6 +5,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from config import logger
+from src.api import router
 
 
 logger = logger(__name__)
@@ -16,15 +17,16 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
 
 def create_app() -> FastAPI:
-    return FastAPI(docs_url='/swagger', lifespan=lifespan)
+    app = FastAPI(docs_url='/swagger', lifespan=lifespan)
+    app.include_router(router)
+    return app
 
 
 if __name__ == '__main__':
     uvicorn.run(
         'src.__main__:create_app',
         factory=True,
-        host='127.0.0.1',
+        host='0.0.0.0',
         port=8001,
         workers=1,
-        access_log=False,
     )

@@ -20,7 +20,7 @@ class DBConnection(Connection):
 
 def create_engine() -> AsyncEngine:
     return create_async_engine(
-        settings.db_url,
+        settings.DATABASE_URL,
         poolclass=AsyncAdaptedQueuePool,
         connect_args={
             'connection_class': DBConnection,
