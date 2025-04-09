@@ -5,8 +5,7 @@ from typing import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from tests.mock.postgres import mock_db
-from tests.mock.repository import MockRequestRepository, mock_requests
+from tests.mock.repository import mock_requests
 from tests.mock.tron import MockTronService
 
 
