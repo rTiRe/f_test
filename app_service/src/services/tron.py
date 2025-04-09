@@ -3,7 +3,7 @@ from tronpy.providers import AsyncHTTPProvider
 from tronpy.exceptions import AddressNotFound
 
 from config import settings
-from src.schemas import AddressInfoResponse
+from src.schemas import AddressInfoResponseSchema
 
 
 class TronService:
@@ -14,7 +14,7 @@ class TronService:
             ),
         )
 
-    async def get_address_info(self, address: str) -> AddressInfoResponse:
+    async def get_address_info(self, address: str) -> AddressInfoResponseSchema:
         if not self.client.is_address(address):
             raise AddressNotFound(f'Invalid Tron address {address}')
         account = await self.client.get_account(address)
@@ -23,7 +23,7 @@ class TronService:
         energy_used = resource.get('EnergyUsed', 0)
         energy_limit = resource.get('EnergyLimit', 0)
         energy_available = energy_limit - energy_used
-        return AddressInfoResponse(
+        return AddressInfoResponseSchema(
             address=address,
             bandwidth=bandwith,
             energy=energy_available,

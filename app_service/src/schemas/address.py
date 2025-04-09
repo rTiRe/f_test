@@ -3,11 +3,11 @@ from decimal import Decimal
 from pydantic import BaseModel
 
 
-class AddressInfoRequest(BaseModel):
+class AddressInfoRequestSchema(BaseModel):
     address: str
 
 
-class AddressInfoResponse(BaseModel):
+class AddressInfoResponseSchema(BaseModel):
     address: str
     bandwidth: int = 0
     energy: int = 0

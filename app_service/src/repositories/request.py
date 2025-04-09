@@ -29,9 +29,15 @@ class RequestRepository(BaseRepository):
         if specifications:
             combined_specifications = AndSpecification(*specifications)
             statement = await combined_specifications.apply_filter(statement)
-        statement = statement.limit(page_size).offset((page - 1) * page_size)
+        statement = statement.limit(
+            page_size,
+        ).offset(
+            (page - 1) * page_size,
+        ).order_by(
+            RequestModel.created_at.desc(),
+        )
         requests = (await session.execute(statement)).all()
-        return [RequestSchema(**request.__dict__) for request in requests]
+        return [RequestSchema(**request[0].__dict__) for request in requests]
 
     @staticmethod
     async def update(

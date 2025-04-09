@@ -20,4 +20,4 @@ class RequestModel(BaseModel):
     bandwidth: Mapped[int] = mapped_column(BigInteger)
     energy: Mapped[int] = mapped_column(BigInteger)
     trx_balance: Mapped[Numeric] = mapped_column(Numeric(precision=30, scale=6))
-    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), index=True)

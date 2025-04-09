@@ -2,15 +2,15 @@ from fastapi import HTTPException, status
 from tronpy.exceptions import AddressNotFound
 
 from src.api.v1.tron.router import router
-from src.schemas import AddressInfoRequest, AddressInfoResponse
+from src.schemas import AddressInfoRequestSchema, AddressInfoResponseSchema
 from src.services import TronService
 from src.storage.postgres import get_db
 from src.repositories import RequestRepository
 from src.schemas import CreateRequestSchema
 
 
-@router.post('/address', response_model=AddressInfoResponse)
-async def get_address_info(request: AddressInfoRequest) -> AddressInfoResponse:
+@router.post('/address', response_model=AddressInfoResponseSchema)
+async def get_address_info(request: AddressInfoRequestSchema) -> AddressInfoResponseSchema:
     tron_service = TronService()
     try:
         address_info = await tron_service.get_address_info(request.address)
