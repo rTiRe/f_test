@@ -25,7 +25,7 @@ services:
     container_name: app_service
     command: ash -c "poetry run python -m alembic upgrade head && poetry run python -m src"
     stop_signal: SIGINT
-    restart: no
+    restart: unless-stopped
     depends_on:
       app_db:
         condition: service_healthy
