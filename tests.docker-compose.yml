@@ -1,0 +1,49 @@
+services:
+  app_db:
+    image: 'postgres:15.5'
+    container_name: app_db
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    restart: unless-stopped
+    ports:
+      - 5442:5432
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-d", "test", "-U", "test" ]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    volumes:
+      - test_app_pgdata:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  test_app_service:
+    build: ./app_service
+    container_name: test_app_service
+    command: ash -c "poetry run python -m alembic upgrade head && poetry run python -m pytest"
+    stop_signal: SIGINT
+    restart: no
+    depends_on:
+      app_db:
+        condition: service_healthy
+    ports:
+      - 8001:8001
+    env_file:
+      - app_service/config/.env
+    volumes:
+      - ./app_service:/usr/src/forkitech/app_service
+    networks:
+      - app_network
+      - external_network
+
+networks:
+  app_network:
+    driver: bridge
+  external_network:
+    driver: bridge
+
+volumes:
+  test_app_pgdata:
